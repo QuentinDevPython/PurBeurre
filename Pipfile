@@ -10,6 +10,7 @@ requests = "*"
 "mysql.connector" = "*"
 peewee = {path = "./peewee"}
 pymysql = "*"
+mysql = "*"
 
 [requires]
 python_version = "3.8"
