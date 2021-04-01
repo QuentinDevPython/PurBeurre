@@ -1,5 +1,9 @@
 import peewee
 
+from Api.downloader import Downloader
+from Api.cleaner import Cleaner
+from Api.inserter import Inserter
+
 
 class Interface:
     def __init__(self, Products, Categories, Products_with_Categories, Favorites):
@@ -21,6 +25,27 @@ class Interface:
         print("|    Server closed     |")
         print("------------------------")
         print()
+
+    def choose_download(self):
+        download_choice = int(input(
+            "Voulez-vous télécharger la base de donnée ?\n\n"
+            "1 - Oui \n"
+            "2 - Non \n \n"
+        ))
+        if download_choice == 1:
+            downloader = Downloader()
+            all_data = downloader.get_all_data()
+            cleaner = Cleaner(all_data)
+            inserter = Inserter(
+                cleaner.get_cleaned_data(),
+                self.Products,
+                self.Categories,
+                self.Products_with_Categories
+            )
+            inserter.insert()
+            print("La base de donnée a correctement été importée")
+        else:
+            print("La base de donnée utilisée est celle téléchargée précédemment")
 
     def choose_category(self):
 
