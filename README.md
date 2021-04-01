@@ -23,6 +23,7 @@ Have to install on your device :
 1. Go to the newly created project folder with: `cd PurBeurre`
 1. Run the command: `pipenv shell`pour lancer l'environnement virtuel du projet
 1. In the Database > connector_database.py file, update the file with your MySQL user and password
+1. Do the same for the Database > create_tables.py file
 
 L'installation est maintenant terminée
 
