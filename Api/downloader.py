@@ -8,7 +8,7 @@ class Downloader:
         self.all_data = list()
         self.request_url = "https://fr.openfoodfacts.org/cgi/search.pl"
         index = 1
-        max_pages = 2
+        max_pages = 10
         try:
             for index in tqdm(range(max_pages)):
                 self.params_for_request = {
