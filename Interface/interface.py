@@ -235,16 +235,27 @@ class Interface:
                 name_product_substitute = [
                     product.name_product_fr for product in query_substitute
                 ]
-                grade_product_substitut = [
+                grade_product_substitute = [
                     product.grade for product in query_substitute
+                ]
+                store_product_substitute = [
+                    product.store for product in query_substitute
+                ]
+                store_product_substitute = store_product_substitute[0].split(",")
+                url_product_substitute = [
+                    product.url for product in query_substitute
                 ]
 
                 print(
                     "\nUn des meilleurs substitut à votre produit est :",
                     name_product_substitute[0].capitalize(),
-                    "- Nutriscore :",
-                    grade_product_substitut[0],
-                    "\n",
+                    "\nNutriscore :",
+                    grade_product_substitute[0],
+                    "\nMagasins où le trouver :",
+                    [store.lstrip().capitalize() for store in store_product_substitute],
+                    "\nURL :",
+                    url_product_substitute[0],
+                    "\n"
                 )
                 save = int(
                     input(
