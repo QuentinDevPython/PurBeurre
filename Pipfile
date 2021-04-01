@@ -9,7 +9,6 @@ verify_ssl = true
 requests = "*"
 "mysql.connector" = "*"
 peewee = {path = "./peewee"}
-mysql = "*"
 pymysql = "*"
 
 [requires]
