@@ -22,7 +22,6 @@ Have to install on your device :
 1. Run the command: `git clone https://github.com/QuentinDevPython/PurBeurre.git`
 1. Go to the newly created project folder with: `cd PurBeurre`
 1. Run the command: `pipenv shell`pour lancer l'environnement virtuel du projet
-1. Install an unsupported pipenv dependency: `pip install mysql-connector-python`
 1. In the Database > connector_database.py file, update the file with your MySQL user and password
 
 L'installation est maintenant terminée
