@@ -21,16 +21,17 @@ Have to install on your device :
 1. Go to your terminal, in the folder where you want to install this project
 1. Run the command: `git clone https://github.com/QuentinDevPython/PurBeurre.git`
 1. Go to the newly created project folder with: `cd PurBeurre`
-1. Run the command: `pipenv shell`pour lancer l'environnement virtuel du projet
 1. In the Database > connector_database.py file, update the file with your MySQL user and password
 1. Do the same for the Database > create_tables.py file
+1. Run the command: `pipenv install`to install th dependencies of the project
+
 
 L'installation est maintenant terminée
 
 ## Start the project
 
 To start the project, go to your terminal where you installed the project and execute the following command:
-`python main.py`
+`pipenv run python main.py`
 
 ## Made with
 
