@@ -27,25 +27,35 @@ class Interface:
         print()
 
     def choose_download(self):
-        download_choice = int(input(
-            "Voulez-vous télécharger la base de donnée ?\n\n"
-            "1 - Oui \n"
-            "2 - Non \n \n"
-        ))
-        if download_choice == 1:
-            downloader = Downloader()
-            all_data = downloader.get_all_data()
-            cleaner = Cleaner(all_data)
-            inserter = Inserter(
-                cleaner.get_cleaned_data(),
-                self.Products,
-                self.Categories,
-                self.Products_with_Categories
+        
+        loop = 1
+
+        while loop == 1:
+
+            download_choice = input(
+                "Voulez-vous télécharger la base de donnée ?\n\n"
+                "1 - Oui \n"
+                "2 - Non \n \n"
             )
-            inserter.insert()
-            print("La base de donnée a correctement été importée")
-        else:
-            print("La base de donnée utilisée est celle téléchargée précédemment")
+
+            if download_choice == '1':
+                loop = 0
+                downloader = Downloader()
+                all_data = downloader.get_all_data()
+                cleaner = Cleaner(all_data)
+                inserter = Inserter(
+                    cleaner.get_cleaned_data(),
+                    self.Products,
+                    self.Categories,
+                    self.Products_with_Categories
+                )
+                inserter.insert()
+                print("La base de donnée a correctement été importée")
+            elif download_choice == '2':
+                loop = 0
+                print("La base de donnée utilisée est celle téléchargée précédemment")
+            else:
+                print('\nJe n\'ai pas compris votre demande \n')
 
     def choose_category(self):
 
@@ -53,19 +63,16 @@ class Interface:
 
         while loop == 1:
 
-            action_choice = int(
-                input(
+            action_choice = input(
                     "Que souhaitez-vous faire ? \n \n"
                     "1 - Choisir une catégorie \n"
                     "2 - Parcourir votre liste de produits \n"
                     "3 - Quitter \n \n"
-                )
             )
 
-            if action_choice == 1:
+            if action_choice == '1':
 
                 loop = 0
-                index = 1
 
                 query_5_random_categories = (
                     self.Categories.select().order_by(
@@ -77,19 +84,29 @@ class Interface:
                     for categories in query_5_random_categories
                 ]
 
-                print("\nVoici quelques catégories : \n")
-                for category in dict_5_categories:
-                    print(index, "-", category.lstrip().capitalize())
-                    index += 1
-                index_category_chosen = int(
-                    input("\nQuelle catégorie souhaitez-vous consulter ? \n \n")
-                )
+                loop = 1
+                while loop == 1:
 
+                    index = 1
+
+                    print("\nVoici quelques catégories : \n")
+                    for category in dict_5_categories:
+                        print(index, "-", category.lstrip().capitalize())
+                        index += 1
+                    index_category_chosen = input(
+                        "\nQuelle catégorie souhaitez-vous consulter ? \n \n"
+                    )
+                    if index_category_chosen.isdecimal():
+                        loop = 0
+                        index_category_chosen = int(index_category_chosen)
+                    else:
+                        print("\nJe n'ai pas bien compris votre demande\n")
+                    
                 Interface.choose_product(
                     self, dict_5_categories[index_category_chosen - 1]
                 )
 
-            elif action_choice == 2:
+            elif action_choice == '2':
 
                 loop = 0
 
@@ -118,20 +135,19 @@ class Interface:
                         )
 
                 else:
-                    print("\nVous n'avez pas de favories pour le moment")
+                    print("\nVous n'avez pas de favoris pour le moment")
 
                 Interface.end(self)
 
-            elif action_choice == 3:
+            elif action_choice == '3':
 
                 loop = 0
                 Interface.end(self)
 
             else:
-                print("\nJe n'ai pas bien compris votre demande :\n")
+                print("\nJe n'ai pas bien compris votre demande\n")
 
     def choose_product(self, index_category_chosen):
-        index = 1
         query_id_category = self.Categories.select().where(
             self.Categories.category == index_category_chosen
         )
@@ -140,27 +156,36 @@ class Interface:
             self.Products_with_Categories.id_category == id_category[0]
         )
 
-        products_chosen_dict = []
-        grade_chosen_dict = []
+        loop = 1
+        while loop == 1:
+            products_chosen_dict = []
+            grade_chosen_dict = []
+            index = 1
 
-        print("\nVoici quelques produits de cette catégorie : \n")
-        for product_with_category in query_id_products_chosen:
-            print(
-                index,
-                "-",
-                product_with_category.id_product.name_product_fr.lstrip().capitalize(),
-                "- Nutriscore =",
-                product_with_category.id_product.grade.lstrip(),
+            print("\nVoici quelques produits de cette catégorie : \n")
+            for product_with_category in query_id_products_chosen:
+                print(
+                    index,
+                    "-",
+                    product_with_category.id_product.name_product_fr.lstrip().capitalize(),
+                    "- Nutriscore =",
+                    product_with_category.id_product.grade.lstrip(),
+                )
+                products_chosen_dict.append(
+                    product_with_category.id_product.name_product_fr.lstrip().capitalize()
+                )
+                grade_chosen_dict.append(product_with_category.id_product.grade.lstrip())
+                index += 1
+            product_chosen = input(
+                "\nLequel de ces produits voulez-vous substitué ? \n \n"
             )
-            products_chosen_dict.append(
-                product_with_category.id_product.name_product_fr.lstrip().capitalize()
-            )
-            grade_chosen_dict.append(product_with_category.id_product.grade.lstrip())
-            index += 1
+            
+            if product_chosen.isdecimal():
+                loop = 0
+                product_chosen = int(product_chosen)
+            else: 
+                print("\nJe n'ai pas bien compris votre demande\n")
 
-        product_chosen = int(
-            input("\nLequel de ces produits voulez-vous substitué ? \n \n")
-        )
         Interface.give_1_substitute(
             self,
             products_chosen_dict[product_chosen - 1],
@@ -271,24 +296,30 @@ class Interface:
                     product.url for product in query_substitute
                 ]
 
-                print(
-                    "\nUn des meilleurs substitut à votre produit est :",
-                    name_product_substitute[0].capitalize(),
-                    "\nNutriscore :",
-                    grade_product_substitute[0],
-                    "\nMagasins où le trouver :",
-                    [store.lstrip().capitalize() for store in store_product_substitute],
-                    "\nURL :",
-                    url_product_substitute[0],
-                    "\n"
-                )
-                save = int(
-                    input(
-                        "Voulez vous le sauvegarder ? \n \n"
-                        "1 - Oui et quitter \n"
-                        "2 - Non et quitter \n \n"
+                loop = 1
+                while loop == 1:
+
+                    print(
+                        "\nUn des meilleurs substitut à votre produit est :",
+                        name_product_substitute[0].capitalize(),
+                        "\nNutriscore :",
+                        grade_product_substitute[0],
+                        "\nMagasins où le trouver :",
+                        [store.lstrip().capitalize() for store in store_product_substitute],
+                        "\nURL :",
+                        url_product_substitute[0],
+                        "\n"
                     )
-                )
+                    save = input(
+                            "Voulez vous le sauvegarder ? \n \n"
+                            "1 - Oui et quitter \n"
+                            "2 - Non et quitter \n \n"
+                    )
+                    if save.isdecimal():
+                        loop = 0
+                        save = int(save)
+                    else:
+                        print("\nJe n'ai pas bien compris votre demande\n")
 
                 if save == 1:
                     Interface.save(self, name_product_substitute[0], product_chosen)

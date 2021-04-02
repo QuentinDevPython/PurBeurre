@@ -5,7 +5,7 @@ mysql_database = peewee.MySQLDatabase(
     database="purBeurre",
     host="localhost",
     user="root",
-    password="your_password"
+    password="EMQG1371#psh9114S"
 )
 
 
