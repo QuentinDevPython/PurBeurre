@@ -28,11 +28,13 @@ class Categories(BaseModel):
 
 
 class Products_with_Categories(BaseModel):
+    id_products_with_categories = peewee.AutoField(primary_key=True, unique=True)
     id_product = peewee.ForeignKeyField(Products)
     id_category = peewee.ForeignKeyField(Categories)
 
 
 class Favorites(BaseModel):
+    if_favorites = peewee.AutoField(primary_key=True, unique=True)
     id_product_to_substitute = peewee.ForeignKeyField(Products)
     id_product_substitute = peewee.ForeignKeyField(Products)
 
