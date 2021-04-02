@@ -1,3 +1,5 @@
+"""Import the module peewee to connect to MySQL and 
+create the tables of the database"""
 import peewee
 
 

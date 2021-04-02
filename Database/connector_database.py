@@ -1,3 +1,5 @@
+"""Import the module mysql.connector to connect to MySQL and 
+create the database"""
 import mysql.connector
 
 

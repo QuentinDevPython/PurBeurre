@@ -1,8 +1,19 @@
+"""Import the module requests to import data from a website"""
 import requests
+"""Import the module tqdm to add a loading bar"""
 from tqdm import tqdm
 
 
 class Downloader:
+    """
+    Class that allowed to collect the data on the OpenFoodFacts website.
+    After being cleaned (to conserv only data that has some specific
+    characteristics), this data will be inserted in our database to 
+    use it to find a product substitute to an another one.
+
+    Args:
+        None
+    """
     def __init__(self):
 
         self.all_data = list()
@@ -28,4 +39,7 @@ class Downloader:
             print("Unable to connect")
 
     def get_all_data(self):
+        """
+        Method that returns all the data downloaded
+        """
         return self.all_data

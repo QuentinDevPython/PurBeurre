@@ -1,11 +1,27 @@
+"""Import the module peewee to access to the 
+tables of the database"""
 import peewee
 
+"""Import the class Dowloader to download the data"""
 from Api.downloader import Downloader
+"""Import the class Dowloader to clean the data"""
 from Api.cleaner import Cleaner
+"""Import the class Dowloader to insert the data"""
 from Api.inserter import Inserter
 
 
 class Interface:
+    """
+    Class that allows to interact with the user and to follow 
+    its choices.
+
+    Args:
+        Products (table of the database)
+        Categories (table of the database)
+        Products_with_Categories (table of the database)
+        Favorites (table of the database)
+    """
+
     def __init__(self, Products, Categories, Products_with_Categories, Favorites):
         self.Products = Products
         self.Categories = Categories
@@ -13,6 +29,9 @@ class Interface:
         self.Favorites = Favorites
 
     def start(self):
+        """
+        Method that confirms the launch of the program
+        """
         print()
         print("------------------------")
         print("|    Server started    |")
@@ -20,6 +39,9 @@ class Interface:
         print()
 
     def end(self):
+        """
+        Method that confirms the closure of the program
+        """
         print()
         print("------------------------")
         print("|    Server closed     |")
@@ -27,6 +49,10 @@ class Interface:
         print()
 
     def choose_download(self):
+        """
+        Method that asks to the user if he wants to download
+        the data or not.
+        """
         
         loop = 1
 
@@ -58,6 +84,9 @@ class Interface:
                 print('\nJe n\'ai pas compris votre demande \n')
 
     def choose_category(self):
+        """
+        Method that asks the user to choose a category
+        """
 
         loop = 1
 
